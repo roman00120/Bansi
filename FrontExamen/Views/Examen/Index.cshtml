@@ -1,0 +1,82 @@
+@model FrontExamen.Models.ExamenViewModel
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h3 class="mb-0">CRUD tblExamen</h3>
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrWhiteSpace(Model.Mensaje))
+                {
+                    <div class="alert @(Model.EsExito ? "alert-success" : "alert-danger")" role="alert">
+                        @Model.Mensaje
+                    </div>
+                }
+
+                <form asp-action="Index" method="post" class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label asp-for="Id" class="form-label">Id</label>
+                        <input asp-for="Id" class="form-control" />
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Origen de datos</label>
+                        <select asp-for="UseWebService" class="form-select">
+                            <option value="true">WebAPI</option>
+                            <option value="false">Stored Procedures</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Nombre" class="form-label">Nombre</label>
+                        <input asp-for="Nombre" class="form-control" />
+                    </div>
+
+                    <div class="col-md-12">
+                        <label asp-for="Descripcion" class="form-label">Descripcion</label>
+                        <input asp-for="Descripcion" class="form-control" />
+                    </div>
+
+                    <div class="col-12 d-flex flex-wrap gap-2">
+                        <button type="submit" name="accion" value="Agregar" class="btn btn-primary">Agregar</button>
+                        <button type="submit" name="accion" value="Actualizar" class="btn btn-warning">Actualizar</button>
+                        <button type="submit" name="accion" value="Eliminar" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" name="accion" value="Consultar" class="btn btn-success">Consultar</button>
+                    </div>
+                </form>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Resultados.Any())
+                            {
+                                foreach (var item in Model.Resultados)
+                                {
+                                    <tr>
+                                        <td>@item.Id</td>
+                                        <td>@item.Nombre</td>
+                                        <td>@item.Descripcion</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="3" class="text-center">No hay registros para mostrar</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
